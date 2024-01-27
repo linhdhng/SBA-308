@@ -1,12 +1,10 @@
-// the learner’s total, weighted average, in which assignments
-// with more points_possible should be counted for more
+
 // e.g. a learner with 50/100 on one assignment and 190/200 on another
 // would have a weighted average score of 240/300 = 80%.
 // "avg": number,
 // each assignment should have a key with its ID,
 // and the value associated with it should be the percentage that
 // the learner scored on the assignment (submission.score / points_possible)
-// <assignment_id>: number
 
 //   const result = [
 //     {
@@ -18,16 +16,6 @@
 //   ]
 // Additionally, if the learner’s submission is late (submitted_at is past due_at), 
 // deduct 10 percent of the total points possible from their score for that assignment.
-
-// use 2 if/else statements (1 switch statement optionally)
-// use try/catch statement to manage potential errors
-// use loop control such as break or continue
-// create and/or manipulate arrays and objects
-// retrieve, manipulate, and remove of iteams in an array or properties in an object
-// use helper functions for repeated tasks
-// ensure program run without errors
-// COMMIT TO GIT REPO FREQUENTLY
-// README file
 
 
 // The provided course information.
@@ -108,44 +96,35 @@ const CourseInfo = {
     }
   ];
   
-//   function getLearnerData(course, ag, submissions) {
-//     // here, we would process this data to achieve the desired result.
-//     const result = [
-//       {
-//         id: 125,
-//         avg: 0.985, // (47 + 150) / (50 + 150)
-//         1: 0.94, // 47 / 50
-//         2: 1.0 // 150 / 150
-//       },
-//       {
-//         id: 132,
-//         avg: 0.82, // (39 + 125) / (50 + 150)
-//         1: 0.78, // 39 / 50
-//         2: 0.833 // late: (140 - 15) / 150
-//       }
-//     ];
-  
-//     return result;
-//   }
-  
-    
-function getLearnerData(courseInfo, assignmentGroup, learnerSubmissions) {
-    //Retrieving id data 
-    const id = 'id'
-    const allId = LearnerSubmissions.map(obj => ({[id]:Object.values(obj)[0]}))
-    console.log(allId)
 
-    //Finding the average
-    const assignmentData = AssignmentGroup.assignments
-    const currentDate = new Date()
-    const totalMaxPoints = assignmentData.reduce((sum, obj) => {
-        const dueDate = new Date(obj.due_at)
-        if (dueDate < currentDate) {
-            return sum + obj.points_possible
-        }
-        return sum
-    }, 0)
-    console.log(totalMaxPoints)
+function getLearnerData(courseInfo, assignmentGroup, learnerSubmissions) {
+    const combinedData = []; 
+    //combine data from given arrays into one array
+    AssignmentGroup.assignments.forEach(assignment => { //iterate through each assignments in AssignmentGroup array
+        //filter data from LearnerSubmission array and store in a variable submissions
+        const submissions = LearnerSubmissions.filter(sub => sub.assignment_id === assignment.id); 
+        submissions.forEach(submission => {//iterate through each elements in the variable 
+            const assignmentData = {//transform data name and store inside new object
+                id: assignment.id,
+                due_date: assignment.due_at,
+                points: assignment.points_possible,
+                learner_submission: {
+                    learner_id: submission.learner_id,
+                    submitted_at: submission.submission.submitted_at,
+                    score: submission.submission.score
+                }
+            };
+            combinedData.push(assignmentData); //push the new objects into the previous declared array
+        });
+    });
+    const currentDate = new Date();
+    //filter out the assignments that has not passed the due date
+    const filteredData = combinedData.filter(item => {
+        const dueDate = new Date(item.due_date);
+        return dueDate < currentDate;
+    });
+    console.log(filteredData);
 }
 
 console.log(getLearnerData(CourseInfo, AssignmentGroup, LearnerSubmissions));
+
