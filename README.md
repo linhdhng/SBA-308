@@ -11,8 +11,8 @@
 </ul>
 
 <p>
-  Analyze and transform this data such that the output of your program is an array of objects, each containing the following information in the following format:
-{
+  Analyze and transform this data such that the output of your program is an array of objects, each containing the following information in the following format:</p>
+<p>{<br>
     // the ID of the learner for which this data has been collected
     "id": number,
     // the learner’s total, weighted average, in which assignments
