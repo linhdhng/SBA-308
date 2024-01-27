@@ -13,18 +13,18 @@
 <p>
   Analyze and transform this data such that the output of your program is an array of objects, each containing the following information in the following format:</p>
 <p>{<br>
-    // the ID of the learner for which this data has been collected<br>
-    <em>"id": number,</em><br>
-    // the learner’s total, weighted average, in which assignments<br>
-    // with more points_possible should be counted for more<br>
-    // e.g. a learner with 50/100 on one assignment and 190/200 on another<br>
-    // would have a weighted average score of 240/300 = 80%.<br>
+    <em>// the ID of the learner for which this data has been collected</em><br>
+    "id": number,<br>
+    <em>// the learner’s total, weighted average, in which assignments</em><br>
+    <em>// with more points_possible should be counted for more</em><br>
+    <em>// e.g. a learner with 50/100 on one assignment and 190/200 on another</em><br>
+    <em>// would have a weighted average score of 240/300 = 80%.</em><br>
     "avg": number,<br>
-    // each assignment should have a key with its ID,<br>
-    // and the value associated with it should be the percentage that<br>
-    // the learner scored on the assignment (submission.score / points_possible)<br>
+    <em>// each assignment should have a key with its ID,</em><br>
+    <em>// and the value associated with it should be the percentage that</em><br>
+    <em>// the learner scored on the assignment (submission.score / points_possible)</em><br>
     <assignment_id>: number,<br>
-    // if an assignment is not yet due, it should not be included in either<br>
-    // the average or the keyed dictionary of scores<br>
+    <em>// if an assignment is not yet due, it should not be included in either</em><br>
+    <em>// the average or the keyed dictionary of scores</em><br>
 }<br>
 </p>
