@@ -14,17 +14,17 @@
   Analyze and transform this data such that the output of your program is an array of objects, each containing the following information in the following format:</p>
 <p>{<br>
     <em>// the ID of the learner for which this data has been collected</em><br>
-    <b></b>"id": number,<br>
+    <b>"id": number,</b><br>
     <em>// the learner’s total, weighted average, in which assignments</em><br>
     <em>// with more points_possible should be counted for more</em><br>
     <em>// e.g. a learner with 50/100 on one assignment and 190/200 on another</em><br>
     <em>// would have a weighted average score of 240/300 = 80%.</em><br>
-    <b></b>"avg": number,<br>
+    <b>"avg": number,</b><br>
     <em>// each assignment should have a key with its ID,</em><br>
     <em>// and the value associated with it should be the percentage that</em><br>
     <em>// the learner scored on the assignment (submission.score / points_possible)</em><br>
-    <b><assignment_id>: number,</b><br>
-    <b><assignment_id>: number,</b><br>
+    <b>'assignment_id': number,</b><br>
+    <b>'assignment_id': number,</b><br>
     <em>// if an assignment is not yet due, it should not be included in either</em><br>
     <em>// the average or the keyed dictionary of scores</em><br>
 }<br>
