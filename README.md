@@ -14,7 +14,7 @@
   Analyze and transform this data such that the output of your program is an array of objects, each containing the following information in the following format:</p>
 <p>{<br>
     // the ID of the learner for which this data has been collected<br>
-    "id": number,<br>
+    <em>"id": number,</em><br>
     // the learner’s total, weighted average, in which assignments<br>
     // with more points_possible should be counted for more<br>
     // e.g. a learner with 50/100 on one assignment and 190/200 on another<br>
