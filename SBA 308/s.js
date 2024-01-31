@@ -83,45 +83,45 @@ function getLearnerData(courseInfo, assignmentGroup, learnerSubmissions) {
     const currentDate = new Date();//declare a current date for comparision
     const combinedData = LearnerSubmissions.flatMap(submission => {//use flatMap to iterate over each submission in LearnerSubmissions and map them to the combined data.
     const assignment = AssignmentGroup.assignments.find(assignment =>//use find method to search for assignment in AssignmentGroup.assignments based on the assignment_id.
-        assignment.id === submission.assignment_id)
-         if (assignment) { //check for the assignments that has passed the due date;
-            const dueDate = new Date(assignment.due_at)
-            const submittedDate = new Date(submission.submission.submitted_at)
-            const isLate = submittedDate > dueDate
-            const scoreRatio = submission.submission.score / assignment.points_possible
-            if (isLate) {
-                const latePenalty = 0.10; // 10% late penalty
-                scoreRatio -= latePenalty
-            }
-
-            return [{
-              id: submission.learner_id,
-              assignment_id: submission.assignment_id,
-              score: scoreRatio
-            }];
+        assignment.id === submission.assignment_id && new Date(assignment.due_at) <= currentDate)
+         
+    if (assignment) {
+        const dueDate = new Date(assignment.due_at);
+        const submittedDate = new Date(submission.submission.submitted_at);
+        const isLate = submittedDate > dueDate
+        let scoreRatio = submission.submission.score / assignment.points_possible
+        if (isLate) {
+          const latePenalty = 0.10; // 10% late penalty applied everytime an assignment found is late
+          scoreRatio -= latePenalty;
         }
-          
-        return [];
-    });
-          
-    const groupedData = combinedData.reduce((accumulator, item) => {
-    const { id, assignment_id, score } = item;
-    if (!accumulator[id]) {
-        accumulator[id] = { id: id };
+
+        return [{
+          id: submission.learner_id,
+          assignment_id: submission.assignment_id,
+          score: scoreRatio
+        }];
     }
-    accumulator[id][assignment_id] = parseFloat(score.toFixed(2));
-    return accumulator;
+
+    return [];
+    })
+
+    const groupedData = combinedData.reduce((accumulator, item) => {
+      const { id, assignment_id, score } = item
+      if (!accumulator[id]) {
+        accumulator[id] = { id: id }
+      }
+
+    accumulator[id][assignment_id] = parseFloat(score.toFixed(2))
+
+    return accumulator
     }, {});
 
     for (const learnerId in groupedData) {
-        const learner = groupedData[learnerId];
-        const avg = parseFloat(((learner[1] + learner[2]) / 2).toFixed(2));
-        learner.avg = avg;
+      const learner = groupedData[learnerId]
+      const avg = parseFloat(((learner[1] + learner[2]) / 2).toFixed(2));
+      learner.avg = avg;
     }
-
-    const result = Object.values(groupedData);
-    console.log(result);
-
+    console.log(Object.values(groupedData))
 }
 
 getLearnerData(CourseInfo, AssignmentGroup, LearnerSubmissions)
